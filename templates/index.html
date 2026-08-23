@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Valorant VC Control</title>
+<style>
+  :root {
+    --bg: #0f1923;
+    --panel: #1a2733;
+    --accent: #ff4655;
+    --text: #ece8e1;
+    --muted: #8b978f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 20px 16px 60px;
+    min-height: 100vh;
+  }
+  h1 { font-size: 22px; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+  h2 { font-size: 12px; text-transform: uppercase; color: var(--muted); margin: 18px 0 6px; letter-spacing: 0.5px; }
+  select {
+    width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #2a3a47;
+    background: var(--panel); color: var(--text); font-size: 15px; margin-bottom: 4px;
+    -webkit-appearance: none; appearance: none;
+  }
+  .btn {
+    width: 100%; padding: 18px; margin-bottom: 12px; border: none; border-radius: 10px;
+    font-size: 17px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+    color: white; background: var(--panel); border: 1px solid #2a3a47;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); }
+  .btn.team-a { background: #1e5aa8; border-color: #1e5aa8; }
+  .btn.team-b { background: #a8321e; border-color: #a8321e; }
+  .btn.secondary { background: var(--panel); }
+  .btn.small { padding: 12px; font-size: 13px; }
+  .row { display: flex; gap: 10px; }
+  .row .btn { flex: 1; }
+  #result {
+    margin-top: 20px; padding: 14px; background: var(--panel); border-radius: 10px;
+    font-size: 14px; white-space: pre-wrap; min-height: 24px; border: 1px solid #2a3a47;
+  }
+  .team-list { margin-top: 12px; }
+  .team-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .team-a-name { color: #6fa8ff; }
+  .team-b-name { color: #ff8f6f; }
+  .moved-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .moved-chip {
+    display: flex; align-items: center; gap: 6px; background: #0f1923;
+    border: 1px solid #2a3a47; border-radius: 20px; padding: 4px 10px 4px 4px; font-size: 13px;
+  }
+  .moved-chip img { width: 20px; height: 20px; border-radius: 50%; }
+  #pwbox { display: {{ 'block' if locked else 'none' }}; margin-bottom: 16px; }
+  #pwbox input {
+    width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #2a3a47;
+    background: var(--panel); color: var(--text); font-size: 15px;
+  }
+
+  /* Player assignment list */
+  #playerList { margin-top: 4px; }
+  .player-card {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px; border-radius: 10px; margin-bottom: 8px;
+    background: var(--panel); border: 1px solid #2a3a47;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .player-card img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+  .player-card .name { flex: 1; font-size: 14px; }
+  .player-card .tag {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    padding: 6px 10px; border-radius: 6px; cursor: pointer;
+  }
+  .player-card.unassigned .tag { background: #2a3a47; color: var(--muted); }
+  .player-card.team-a-card { border-color: #1e5aa8; }
+  .player-card.team-a-card .tag { background: #1e5aa8; color: white; }
+  .player-card.team-b-card { border-color: #a8321e; }
+  .player-card.team-b-card .tag { background: #a8321e; color: white; }
+  .empty-hint { color: var(--muted); font-size: 13px; padding: 10px 0; }
+</style>
+</head>
+<body>
+  <h1>VC Control</h1>
+  <div class="sub">Split, move, regroup — pick your channels below</div>
+
+  <div id="pwbox">
+    <input type="password" id="pw" placeholder="Server password" onkeydown="if(event.key==='Enter') unlock()">
+    <button class="btn primary" style="margin-top:8px;" onclick="unlock()">Unlock</button>
+  </div>
+
+  <h2>Lobby (where everyone waits)</h2>
+  <select id="lobbySelect" onchange="loadPlayers()"></select>
+
+  <h2>Team A channel</h2>
+  <select id="teamASelect"></select>
+
+  <h2>Team B channel</h2>
+  <select id="teamBSelect"></select>
+
+  <h2>Players — tap a name to assign team</h2>
+  <div class="row" style="margin-bottom:10px;">
+    <button class="btn secondary small" onclick="loadPlayers()">↻ Refresh players</button>
+    <button class="btn secondary small" onclick="randomAssign()">🎲 Random assign</button>
+  </div>
+  <div id="playerList"><div class="empty-hint">Pick a lobby above to load players.</div></div>
+
+  <div style="margin-top:18px;">
+    <div class="row">
+      <button class="btn team-a" onclick="move('a')">Move → Team A</button>
+      <button class="btn team-b" onclick="move('b')">Move → Team B</button>
+    </div>
+
+    <button class="btn secondary" onclick="rematch()">🔁 Rematch (swap sides)</button>
+    <button class="btn secondary" onclick="regroup()">🏠 Regroup to Lobby</button>
+    <button class="btn secondary" onclick="loadChannels()" style="font-size:13px;padding:12px;">↻ Refresh channel list</button>
+  </div>
+
+  <div id="result">Pick your VCs, load players, then tap names to assign teams.</div>
+
+<script>
+const resultEl = document.getElementById('result');
+let channels = [];
+let players = [];          // [{id, name, avatar}]
+let assignments = {};      // id -> 'a' | 'b' | undefined
+
+function pw() { const el = document.getElementById('pw'); return el ? el.value : ''; }
+
+async function apiGet(path) {
+  const res = await fetch(path, { headers: { 'X-PW': pw() } });
+  const data = await res.json();
+  if (!res.ok) {
+    resultEl.textContent = res.status === 401
+      ? '🔒 Enter the server password above, then tap Unlock'
+      : '⚠️ ' + (data.error || 'Error');
+    return null;
+  }
+  return data;
+}
+
+async function apiPost(path, body) {
+  resultEl.textContent = 'Working...';
+  try {
+    const res = await fetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-PW': pw() },
+      body: JSON.stringify(body || {})
+    });
+    const data = await res.json();
+    if (!res.ok) { resultEl.textContent = '⚠️ ' + (data.error || 'Something went wrong'); return null; }
+    return data;
+  } catch (e) {
+    resultEl.textContent = '⚠️ Network error';
+    return null;
+  }
+}
+
+function fillSelect(el, list, keepValue) {
+  const prev = keepValue ? el.value : null;
+  el.innerHTML = list.map(c => `<option value="${c.id}">${c.name} (${c.member_count})</option>`).join('');
+  if (prev && list.some(c => c.id === prev)) el.value = prev;
+}
+
+async function loadChannels() {
+  const data = await apiGet('/api/channels');
+  if (!data) return;
+  channels = data.channels;
+  fillSelect(document.getElementById('lobbySelect'), channels, true);
+  fillSelect(document.getElementById('teamASelect'), channels, true);
+  fillSelect(document.getElementById('teamBSelect'), channels, true);
+  resultEl.textContent = `Loaded ${channels.length} voice channels. Pick your VCs and load players.`;
+}
+
+function renderPlayers() {
+  const el = document.getElementById('playerList');
+  if (players.length === 0) {
+    el.innerHTML = '<div class="empty-hint">No one in that lobby VC right now.</div>';
+    return;
+  }
+  el.innerHTML = players.map(p => {
+    const team = assignments[p.id];
+    const cls = team === 'a' ? 'team-a-card' : team === 'b' ? 'team-b-card' : 'unassigned';
+    const tag = team === 'a' ? 'Team A' : team === 'b' ? 'Team B' : 'Unassigned';
+    return `<div class="player-card ${cls}">
+      <img src="${p.avatar}" alt="">
+      <div class="name">${p.name}</div>
+      <div class="tag" onclick="cycleAssignment('${p.id}')">${tag}</div>
+    </div>`;
+  }).join('');
+}
+
+function cycleAssignment(id) {
+  const current = assignments[id];
+  if (current === undefined) assignments[id] = 'a';
+  else if (current === 'a') assignments[id] = 'b';
+  else delete assignments[id];
+  renderPlayers();
+}
+
+async function loadPlayers() {
+  const lobbyId = document.getElementById('lobbySelect').value;
+  if (!lobbyId) return;
+  const data = await apiGet('/api/lobby_members?lobby_id=' + lobbyId);
+  if (!data) return;
+  players = data.members;
+  assignments = {};
+  renderPlayers();
+  resultEl.textContent = players.length
+    ? `Loaded ${players.length} player(s). Tap a name to assign.`
+    : 'No one in that lobby VC right now.';
+}
+
+function randomAssign() {
+  if (players.length < 2) { resultEl.textContent = '⚠️ Need at least 2 players loaded'; return; }
+  const shuffled = [...players].sort(() => Math.random() - 0.5);
+  const half = Math.floor(shuffled.length / 2);
+  assignments = {};
+  shuffled.forEach((p, i) => { assignments[p.id] = i < half ? 'b' : 'a'; });
+  renderPlayers();
+  resultEl.textContent = 'Randomly assigned. Tap any name to change it before moving.';
+}
+
+function movedChip(p) { return '<div class="moved-chip"><img src="' + p.avatar + '" alt=""><span>' + p.name + '</span></div>'; }
+
+function failedHtml(failed) {
+  if (!failed || failed.length === 0) return '';
+  return '<div style="margin-top:10px;color:#ff8f6f;font-size:13px;">⚠️ Failed:<br>' +
+    failed.map(f => f.name + ' — ' + f.reason).join('<br>') + '</div>';
+}
+
+async function move(team) {
+  const ids = Object.keys(assignments).filter(id => assignments[id] === team);
+  if (ids.length === 0) {
+    resultEl.textContent = `⚠️ No one assigned to Team ${team.toUpperCase()} yet — tap names above first`;
+    return;
+  }
+  const channelId = team === 'a'
+    ? document.getElementById('teamASelect').value
+    : document.getElementById('teamBSelect').value;
+  const data = await apiPost('/api/move/' + team, { channel_id: channelId, member_ids: ids });
+  if (!data) return;
+  resultEl.innerHTML = '✅ Moved<div class="moved-list">' + data.moved.map(movedChip).join('') + '</div>' + failedHtml(data.failed);
+}
+
+async function rematch() {
+  const teamAChannel = document.getElementById('teamASelect').value;
+  const teamBChannel = document.getElementById('teamBSelect').value;
+  const data = await apiPost('/api/rematch', { team_a_channel: teamAChannel, team_b_channel: teamBChannel });
+  if (!data) return;
+  resultEl.innerHTML = '✅ Sides swapped' + failedHtml(data.failed);
+}
+
+async function regroup() {
+  const lobbyId = document.getElementById('lobbySelect').value;
+  const teamAChannel = document.getElementById('teamASelect').value;
+  const teamBChannel = document.getElementById('teamBSelect').value;
+  const data = await apiPost('/api/regroup', { from_channel_ids: [teamAChannel, teamBChannel], to_channel_id: lobbyId });
+  if (!data) return;
+  resultEl.innerHTML = '✅ Back in lobby<div class="moved-list">' + data.moved.map(movedChip).join('') + '</div>' + failedHtml(data.failed);
+}
+
+async function unlock() {
+  await loadChannels();
+  await loadPlayers();
+}
+
+loadChannels().then(loadPlayers);
+</script>
+</body>
+</html>
