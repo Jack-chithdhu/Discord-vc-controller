@@ -1,20 +1,25 @@
 <div align="center">
 
-# 🎙️ Discord VC Controller
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:5865F2,50:7C3AED,100:00D4FF&height=180&section=header&text=Discord%20VC%20Controller&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=38" width="100%" alt="Discord VC Controller banner">
 
-### Control • Track • Automate
+### 🎙️ Control • Track • Automate
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=2800&pause=900&color=7C3AED&center=true&vCenter=true&width=650&lines=Powerful+voice+channel+control;Accurate+VC+session+tracking;Server+analytics+and+workflows" alt="Animated project description">
 
 <p>
-  <img src="https://img.shields.io/badge/Discord-Bot-5865F2?style=for-the-badge&logo=discord&logoColor=white">
-  <img src="https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white">
-  <img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white">
+<img src="https://img.shields.io/badge/Discord-Bot-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
+<img src="https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
+<img src="https://img.shields.io/github/last-commit/Jack-chithdhu/Discord-vc-controller?style=for-the-badge" alt="Last commit">
 </p>
 
+<p>
 <a href="#-features">Features</a> •
-<a href="#-demo">Demo</a> •
+<a href="#-visual-demo">Demo</a> •
 <a href="#-architecture">Architecture</a> •
 <a href="#-setup">Setup</a> •
 <a href="#-roadmap">Roadmap</a>
+</p>
 
 </div>
 
@@ -22,9 +27,9 @@
 
 ## ✨ What is it?
 
-**Discord VC Controller** is a Discord bot focused on voice-channel management, VC activity tracking, analytics, and custom approval workflows.
+**Discord VC Controller** is a Discord server tool focused on voice-channel management, reliable VC activity tracking, analytics, and custom approval workflows.
 
-> **Make your server easier to control without making it complicated.**
+> 🎮 Built for a growing gaming community — with the tools to control the server and understand how people actually use it.
 
 ---
 
@@ -35,21 +40,27 @@
 <td width="50%">
 
 ### 🔊 Voice Control
-- Move members between VCs
-- Lock / unlock voice channels
-- Manage voice limits
-- Control access
-- Handle VC state changes
+
+Move, manage and control members and voice channels from one system.
+
+- Member movement
+- Lock / unlock controls
+- Voice limits
+- Access control
+- VC state handling
 
 </td>
 <td width="50%">
 
 ### 📊 VC Analytics
-- Individual VC sessions
+
+Turn Discord voice activity into useful statistics.
+
+- Session tracking
 - Today / Week / Month / All Time
-- Session history
 - Channel activity
-- Statistics & leaderboards
+- Session history
+- Leaderboards
 
 </td>
 </tr>
@@ -57,16 +68,23 @@
 <td width="50%">
 
 ### 📋 Approval Workflows
-- Form-based requests
-- Admin approval / rejection
-- Custom actions after approval
+
+A form-based request flow for server operations.
+
+- Submit forms
+- Admin review
+- Approve / reject
+- Custom actions
 - WhatsApp approval workflow
 
 </td>
 <td width="50%">
 
 ### 🌐 Dashboard
-- Remote server management
+
+Bring important server controls and analytics together in one place.
+
+- Remote management
 - VC activity
 - Analytics
 - Centralised controls
@@ -77,79 +95,84 @@
 
 ---
 
-## 🎬 Demo
+## 🎬 Visual Demo
 
-> Add your real screenshots/GIFs to `assets/` and uncomment the image lines below.
+<div align="center">
 
-### 🔊 VC Control
+| 🔊 VC Control | 📊 Analytics |
+|:---:|:---:|
+| `Discord → Action → Done` | `Events → Sessions → Stats` |
 
-```text
-Discord → Select member → Choose action → Done
-```
+</div>
 
-<!-- <img src="assets/vc-control.gif" width="850"> -->
+> 📸 **Add your real screenshots/GIFs here** when ready. The README is already structured for them:
+>
+> `assets/vc-control.gif` · `assets/vc-analytics.gif` · `assets/approval.gif`
 
-### 📊 VC Analytics
+<!--
+<div align="center">
+<img src="assets/vc-control.gif" width="48%" alt="VC control demo">
+<img src="assets/vc-analytics.gif" width="48%" alt="VC analytics demo">
+</div>
 
-<!-- <img src="assets/vc-analytics.gif" width="850"> -->
-
-### 📋 Approval Workflow
-
-<!-- <img src="assets/approval.gif" width="850"> -->
+<div align="center">
+<img src="assets/approval.gif" width="70%" alt="Approval workflow demo">
+</div>
+-->
 
 ---
 
 ## 🧠 Architecture
 
 ```text
-                    ┌─────────────────┐
-                    │     DISCORD     │
-                    └────────┬────────┘
-                             │
-                             ▼
-                  ┌────────────────────┐
-                  │  VC CONTROLLER     │
-                  └─────────┬──────────┘
+                         DISCORD
                             │
-             ┌──────────────┼──────────────┐
-             ▼              ▼              ▼
-        🔊 Controls     📊 Tracking     📋 Forms
-             │              │              │
-             └──────────────┼──────────────┘
+                            ▼
+                 ┌────────────────────┐
+                 │  VC CONTROLLER     │
+                 └──────────┬─────────┘
+                            │
+          ┌─────────────────┼─────────────────┐
+          ▼                 ▼                 ▼
+     🔊 Controls        📊 Tracking       📋 Forms
+          │                 │                 │
+          └─────────────────┼─────────────────┘
                             ▼
                     ┌───────────────┐
                     │   PostgreSQL  │
                     └───────┬───────┘
                             │
                             ▼
-                     🌐 Dashboard
+                       🌐 Dashboard
 ```
 
 ---
 
 ## 📈 VC Tracking
 
-The tracking system keeps **raw voice events** while using **session records** for statistics.
+The tracking system separates raw Discord events from interpreted sessions:
 
 ```text
 Discord Voice Event
         │
         ▼
-    vc_logs
-  Raw history
-        │
-        ▼
-  vc_sessions
-Actual sessions
-        │
-        ▼
-    Analytics
-        │
-        ▼
-     Dashboard
+    ┌─────────┐
+    │ vc_logs │  ← Raw event history
+    └────┬────┘
+         │
+         ▼
+ ┌────────────────┐
+ │  vc_sessions   │  ← Actual sessions
+ └───────┬────────┘
+         │
+         ▼
+   📊 Analytics
+         │
+         ▼
+    🌐 Dashboard
 ```
 
-This keeps an audit trail while allowing statistics to be calculated from session data.
+This provides an audit trail while keeping statistics based on session data.
 
 ---
 
@@ -158,8 +181,24 @@ This keeps an audit trail while allowing statistics to be calculated from sessio
 | Data | Purpose |
 |---|---|
 | `vc_logs` | Raw Discord voice events / audit history |
-| `vc_sessions` | Interpreted VC sessions |
-| Analytics | Calculated from session data |
+| `vc_sessions` | Interpreted voice sessions |
+| Analytics | Statistics calculated from session data |
+
+---
+
+## 🛡️ Tracking Reliability
+
+The VC system is designed around the important Discord voice states:
+
+- 🟢 JOIN
+- 🔴 LEAVE
+- 🔄 MOVE
+- ⚡ DISCONNECT
+- 🔁 Bot restart / reconnect
+- 🚦 Startup reconciliation
+- ⏱️ Long-running sessions
+- 📅 Date/time boundaries
+- 🗃️ Historical session data
 
 ---
 
@@ -180,7 +219,7 @@ pip install -r requirements.txt
 
 ### 3. Configure environment
 
-Set the variables required by the project, such as:
+Configure the environment values required by the project, including the Discord bot token and database connection.
 
 ```text
 DISCORD_TOKEN
@@ -193,54 +232,40 @@ DATABASE_URL
 python app.py
 ```
 
-Follow the project's current configuration files for any additional settings.
-
----
-
-## 🛡️ Reliability
-
-The VC system is designed around:
-
-- JOIN / LEAVE
-- MOVE between voice channels
-- DISCONNECT
-- Bot restart/reconnect handling
-- Startup reconciliation
-- Long-running sessions
-- Date/time boundaries
-- Historical session data
+Follow the repository's configuration files for any additional settings required by your deployment.
 
 ---
 
 ## 🗺️ Roadmap
 
-```text
-VC Control              ████████████████████  DONE
-VC Tracking             ████████████████████  DONE
-VC Analytics            ████████████████████  DONE
-Approval Workflows      ████████████████████  DONE
-Dashboard               ████████████████████  DONE
+<div align="center">
 
-VC Reservations         ░░░░░░░░░░░░░░░░░░░░  NEXT
-Who Was With Me?        ░░░░░░░░░░░░░░░░░░░░  NEXT
-Personal VC Reports     ░░░░░░░░░░░░░░░░░░░░  NEXT
-```
+| Feature | Status |
+|:---|:---:|
+| 🔊 VC Control | ✅ Done |
+| 📊 VC Tracking | ✅ Done |
+| 📈 VC Analytics | ✅ Done |
+| 📋 Approval Workflows | ✅ Done |
+| 🌐 Dashboard | ✅ Done |
+| 🔊 VC Reservations | 🚧 Next |
+| 👥 Who Was With Me? | 🚧 Next |
+| 📊 Personal VC Reports | 🚧 Next |
+
+</div>
 
 ---
 
 ## 💡 Project Philosophy
 
-Most Discord bots try to do everything.
+This project isn't trying to be another bot with hundreds of unrelated commands.
 
-This project focuses on building **useful systems around the way a server actually works**.
-
-Voice control, activity tracking, analytics, and approval workflows are designed to work together rather than being a collection of unrelated commands.
+It focuses on **useful systems for an active community** — voice control, reliable activity tracking, analytics and workflows that work together.
 
 ---
 
 ## 🤝 Contributing
 
-Suggestions, bug reports and improvements are welcome.
+Suggestions, improvements and bug reports are welcome.
 
 For VC tracking issues, include:
 
@@ -258,6 +283,6 @@ For VC tracking issues, include:
 
 **Built for friends. Built for gaming. Built to grow.**
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=7C3AED&height=100&section=footer" alt="Animated footer">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00D4FF,50:7C3AED,100:5865F2&height=120&section=footer&animation=fadeIn" width="100%" alt="Animated footer">
 
 </div>
