@@ -17,7 +17,10 @@ COPY . .
 # cannot try to resume a websocket that was never established (the source of
 # the NoneType.sequence failure seen in production). The outer loop creates a
 # fresh Client and backs off between attempts instead.
-RUN sed -i 's/bot\.start(DISCORD_TOKEN)/bot.start(DISCORD_TOKEN, reconnect=False)/' app.py
+#
+# For HTTP 429s, honor Discord's retry_after value instead of guessing with
+# the generic exponential delay.
+RUN sed -i 's/bot\.start(DISCORD_TOKEN)/bot.start(DISCORD_TOKEN, reconnect=False)/' app.py && sed -i '/if status == 429:/a\                retry_delay = max(float(getattr(e, "retry_after", retry_delay)), 1.0)' app.py
 
 ENV PORT=8080
 EXPOSE 8080
