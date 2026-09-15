@@ -18,9 +18,11 @@ COPY . .
 # the NoneType.sequence failure seen in production). The outer loop creates a
 # fresh Client and backs off between attempts instead.
 #
-# For HTTP 429s, honor Discord's retry_after value instead of guessing with
-# the generic exponential delay.
-RUN sed -i 's/bot\.start(DISCORD_TOKEN)/bot.start(DISCORD_TOKEN, reconnect=False)/' app.py && sed -i '/if status == 429:/a\                retry_delay = max(float(getattr(e, "retry_after", retry_delay)), 1.0)' app.py
+# The source calls bot.start() through loop.run_until_complete(), so the
+# previous replacement pattern never matched. Match the actual source line.
+# For HTTP 429s, log the server-provided retry information so we can distinguish
+# a normal rate-limit bucket from a broader/global restriction.
+RUN sed -i 's/bot\.start(DISCORD_TOKEN))/bot.start(DISCORD_TOKEN, reconnect=False))/' app.py && sed -i '/if status == 429:/a\                print(f"[bot] 429 details: retry_after={getattr(e, \"retry_after\", None)} headers={getattr(getattr(e, \"response\", None), \"headers\", {})}", flush=True)' app.py && sed -i '/if status == 429:/a\                retry_delay = max(float(getattr(e, "retry_after", retry_delay)), 1.0)' app.py
 
 ENV PORT=8080
 EXPOSE 8080
