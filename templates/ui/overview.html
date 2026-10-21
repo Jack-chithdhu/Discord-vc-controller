@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block content %}
+<div class="banner banner--warning" id="status-error" hidden>
+  <div><strong id="status-error-title">Status unavailable.</strong> <span id="status-error-detail"></span></div>
+</div>
+
+<h2 class="section-title">System status</h2>
+<div class="bento">
+  <section class="card span-3" aria-labelledby="st-bot"><div class="stat">
+    <span class="stat-label" id="st-bot">Discord bot</span>
+    <span class="stat-value" data-bind="bot">…</span>
+    <span class="stat-note" data-bind="bot-note">Checking</span></div></section>
+  <section class="card span-3" aria-labelledby="st-db"><div class="stat">
+    <span class="stat-label" id="st-db">Database</span>
+    <span class="stat-value" data-bind="db">…</span>
+    <span class="stat-note" data-bind="db-note">Checking</span></div></section>
+  <section class="card span-3" aria-labelledby="st-up"><div class="stat">
+    <span class="stat-label" id="st-up">Web app uptime</span>
+    <span class="stat-value" data-bind="uptime">…</span>
+    <span class="stat-note" data-bind="uptime-note">Since last restart</span></div></section>
+  <section class="card span-3" aria-labelledby="st-acc"><div class="stat">
+    <span class="stat-label" id="st-acc">Panel access</span>
+    <span class="stat-value" data-bind="access">…</span>
+    <span class="stat-note" data-bind="access-note">Checking</span></div></section>
+  <section class="card span-6" aria-labelledby="st-tz"><div class="stat">
+    <span class="stat-label" id="st-tz">Server timezone</span>
+    <span class="stat-value" data-bind="tz">…</span>
+    <span class="stat-note" data-bind="tz-note">Used for reservation dates and times</span></div></section>
+  <section class="card span-6" aria-labelledby="st-seen"><div class="stat">
+    <span class="stat-label" id="st-seen">Last status check</span>
+    <span class="stat-value" data-bind="seen">…</span>
+    <span class="stat-note" data-bind="seen-note">Refreshes about every 30 seconds</span></div></section>
+</div>
+
+<h2 class="section-title">Where things are</h2>
+<div class="card">
+  <ul class="caps">
+    {{ cap("Voice controls", "available", "Split, move, lock and disconnect work in the classic panel today. They are not on this page yet.") }}
+    {{ cap("Reservations", "planned", "Limits are editable in the classic panel. Listing, history and web approvals do not exist yet.") }}
+    {{ cap("Community and analytics", "planned", "Existing read-only data is shown in the classic Stats tab. New pages come in a later phase.") }}
+    {{ cap("Administration", "available", "Feature switches, birthday interval and reservation limits are in the classic Settings tab.") }}
+  </ul>
+</div>
+{% endblock %}

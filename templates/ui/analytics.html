@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block actions %}<div class="page-actions"><a class="btn btn--primary" href="/legacy">Open classic panel</a></div>{% endblock %}
+{% block content %}
+<div class="banner banner--info"><div><strong>No charts here yet.</strong> The classic panel's Stats tab shows today's analytics.</div></div>
+<h2 class="section-title">Capabilities</h2>
+<div class="card"><ul class="caps">
+  {{ cap("Voice leaderboard and analytics summary", "available", "In the classic panel, Stats tab.") }}
+  {{ cap("Activity charts on this page", "planned", "Will use the existing analytics endpoints. Not built yet.") }}
+  {{ cap("Data export", "unsupported", "No export endpoint exists.") }}
+</ul></div>
+{% endblock %}

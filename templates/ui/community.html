@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block actions %}<div class="page-actions"><a class="btn btn--primary" href="/profiles">Member profiles</a><a class="btn" href="/legacy">Classic panel</a></div>{% endblock %}
+{% block content %}
+<div class="banner banner--info"><div><strong>This page is a map, not a dashboard yet.</strong> It shows no member data of its own.</div></div>
+<h2 class="section-title">Capabilities</h2>
+<div class="card"><ul class="caps">
+  {{ cap("Member profiles and achievements", "available", "The existing profile pages, linked above.") }}
+  {{ cap("Voice-time leaderboard", "available", "In the classic panel, Stats tab.") }}
+  {{ cap("Points leaderboard on the website", "planned", "Approved as a password-protected read-only endpoint. Not built yet.") }}
+  {{ cap("Achievements leaderboard on the website", "planned", "Available as a Discord command only. Would need a new endpoint.") }}
+</ul></div>
+{% endblock %}

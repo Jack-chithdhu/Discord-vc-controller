@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block actions %}<div class="page-actions"><a class="btn btn--primary" href="/legacy">Open classic panel</a></div>{% endblock %}
+{% block content %}
+<div class="banner banner--info"><div><strong>Voice controls have not moved yet.</strong> They keep working in the classic panel. This page will get them in the next phase, with the same password check and the same actions.</div></div>
+<h2 class="section-title">Capabilities</h2>
+<div class="card"><ul class="caps">
+  {{ cap("Split a lobby into two teams", "available", "In the classic panel, Teams tab.") }}
+  {{ cap("Move a team, regroup, rematch", "available", "In the classic panel, Teams tab.") }}
+  {{ cap("Lock and unlock channels", "available", "In the classic panel, Lock tab.") }}
+  {{ cap("Disconnect members, voice toggle", "available", "In the classic panel.") }}
+  {{ cap("Voice controls on this page", "planned", "Not built yet. Nothing here can change a channel.") }}
+</ul></div>
+{% endblock %}

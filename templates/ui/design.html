@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block content %}
+<div class="banner banner--warning"><div><strong>Reference page.</strong> Everything below is sample content. The controls are inert and no data is real.</div></div>
+
+<h2 class="section-title">Colour</h2>
+<div class="swatches">
+  <div class="sw sw--bg"><div class="sw-chip"></div><div class="sw-meta"><strong>Background</strong>#0B0A14</div></div>
+  <div class="sw sw--sidebar"><div class="sw-chip"></div><div class="sw-meta"><strong>Sidebar</strong>#12101E</div></div>
+  <div class="sw sw--card"><div class="sw-chip"></div><div class="sw-meta"><strong>Card</strong>#19152A</div></div>
+  <div class="sw sw--raised"><div class="sw-chip"></div><div class="sw-meta"><strong>Raised</strong>#211B34</div></div>
+  <div class="sw sw--purple"><div class="sw-chip"></div><div class="sw-meta"><strong>Primary</strong>#A78BFA</div></div>
+  <div class="sw sw--cyan"><div class="sw-chip"></div><div class="sw-meta"><strong>Cyan</strong>#22D3EE</div></div>
+  <div class="sw sw--success"><div class="sw-chip"></div><div class="sw-meta"><strong>Success</strong>#4ADE80</div></div>
+  <div class="sw sw--warning"><div class="sw-chip"></div><div class="sw-meta"><strong>Warning</strong>#FBBF24</div></div>
+  <div class="sw sw--danger"><div class="sw-chip"></div><div class="sw-meta"><strong>Danger</strong>#F87171</div></div>
+</div>
+
+<h2 class="section-title">Buttons and badges</h2>
+<div class="card stack">
+  <div class="row"><button type="button" class="btn btn--primary">Primary</button><button type="button" class="btn btn--cyan">Cyan</button><button type="button" class="btn">Secondary</button><button type="button" class="btn btn--ghost">Ghost</button><button type="button" class="btn btn--danger">Danger</button><button type="button" class="btn" disabled>Disabled</button></div>
+  <div class="row"><span class="badge badge--available">Available</span><span class="badge badge--planned">Planned</span><span class="badge badge--unsupported">Not supported</span><span class="badge badge--warning">Warning</span><span class="badge badge--danger">Error</span></div>
+  <div class="row">
+    <span class="status" data-state="online"><span class="status-dot" aria-hidden="true"></span>Online</span>
+    <span class="status" data-state="degraded"><span class="status-dot" aria-hidden="true"></span>Degraded</span>
+    <span class="status" data-state="stale"><span class="status-dot" aria-hidden="true"></span>Stale</span>
+    <span class="status" data-state="offline"><span class="status-dot" aria-hidden="true"></span>Offline</span>
+    <span class="status" data-state="loading"><span class="status-dot" aria-hidden="true"></span>Loading</span>
+  </div>
+</div>
+
+<h2 class="section-title">Form fields</h2>
+<div class="card bento">
+  <div class="field span-6"><label for="d-text">Text</label><input class="input" id="d-text" type="text" placeholder="Placeholder"><span class="hint">Helper text</span></div>
+  <div class="field span-6"><label for="d-err">With error</label><input class="input" id="d-err" type="text" aria-invalid="true" aria-describedby="d-err-msg"><span class="error-text" id="d-err-msg">This value is not valid.</span></div>
+  <div class="field span-6"><label for="d-sel">Select</label><select class="select" id="d-sel"><option>First</option><option>Second</option></select></div>
+  <div class="check span-6"><input type="checkbox" id="d-chk"><label for="d-chk">Checkbox</label></div>
+</div>
+
+<h2 class="section-title">Bento tiles and table</h2>
+<div class="bento">
+  <div class="card card--accent span-4"><div class="stat"><span class="stat-label">Sample metric</span><span class="stat-value">1,234</span><span class="stat-note">Sample note</span></div></div>
+  <div class="card span-4"><div class="stat"><span class="stat-label">Sample metric</span><span class="stat-value">56%</span><span class="stat-note">Sample note</span></div></div>
+  <div class="card card--raised span-4"><div class="stat"><span class="stat-label">Sample metric</span><span class="stat-value">7h 20m</span><span class="stat-note">Sample note</span></div></div>
+  <div class="span-12 table-wrap"><table class="table"><caption>Sample table</caption>
+    <thead><tr><th scope="col">Member</th><th scope="col">Time</th></tr></thead>
+    <tbody><tr><td>Sample member A</td><td>2h 10m</td></tr><tr><td>Sample member B</td><td>1h 05m</td></tr></tbody></table></div>
+</div>
+
+<h2 class="section-title">Feedback states</h2>
+<div class="bento">
+  <div class="state span-6"><span class="state-title">Nothing here yet</span><span>Empty state with a reason.</span></div>
+  <div class="state state--error span-6" role="alert"><span class="state-title">Could not load</span><span>Error state: say what failed.</span></div>
+  <div class="state state--offline span-6"><span class="state-title">You are offline</span><span>Offline state: shows the last known data.</span></div>
+  <div class="card span-6" aria-label="Loading sample"><span class="skeleton"></span><br><span class="skeleton"></span></div>
+</div>
+{% endblock %}
