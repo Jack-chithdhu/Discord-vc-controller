@@ -1,0 +1,142 @@
+/* Reusable components. Nothing here is page-specific. */
+
+/* ---- cards ---- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s4);
+  box-shadow: var(--shadow-1);
+  min-width: 0;
+}
+.card--raised { background: var(--raised); }
+.card--accent { border-color: rgba(167, 139, 250, 0.4); background: linear-gradient(180deg, var(--purple-soft), var(--card) 70%); }
+.card-title { font-size: var(--fs-sm); font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--s3); }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s3); }
+.muted { color: var(--text-3); }
+.text-2 { color: var(--text-2); }
+.small { font-size: var(--fs-sm); }
+
+/* stat tile */
+.stat { display: flex; flex-direction: column; gap: var(--s1); }
+.stat-label { font-size: var(--fs-xs); color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.stat-value { font-size: var(--fs-2xl); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.stat-note { font-size: var(--fs-sm); color: var(--text-2); }
+
+/* ---- buttons ---- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-height: var(--tap); padding: 0 var(--s4);
+  border-radius: var(--r-md); border: 1px solid var(--border-strong);
+  background: var(--raised); color: var(--text);
+  font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.btn:hover { background: #2A2342; border-color: #4A4268; color: var(--text); }
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--purple); border-color: var(--purple); color: var(--on-accent); }
+.btn--primary:hover { background: #B9A1FB; border-color: #B9A1FB; color: var(--on-accent); }
+.btn--cyan { background: var(--cyan); border-color: var(--cyan); color: var(--on-accent); }
+.btn--cyan:hover { background: #4FDDF1; border-color: #4FDDF1; color: var(--on-accent); }
+.btn--ghost { background: transparent; border-color: transparent; color: var(--text-2); }
+.btn--ghost:hover { background: var(--card); border-color: var(--border); color: var(--text); }
+.btn--danger { background: var(--danger-soft); border-color: rgba(248, 113, 113, 0.5); color: var(--danger); }
+.btn--danger:hover { background: rgba(248, 113, 113, 0.2); color: var(--danger); }
+.btn--sm { min-height: 36px; padding: 0 var(--s3); font-size: var(--fs-sm); }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ---- forms ---- */
+.field { display: flex; flex-direction: column; gap: var(--s1); }
+.field label, .label { font-size: var(--fs-sm); font-weight: 600; color: var(--text-2); }
+.field .hint { font-size: var(--fs-xs); color: var(--text-3); }
+.field .error-text { font-size: var(--fs-xs); color: var(--danger); }
+.input, .select, .textarea {
+  width: 100%; min-height: var(--tap);
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--border-strong); border-radius: var(--r-md);
+  padding: 0 var(--s3); font: inherit;
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+.textarea { padding: var(--s3); min-height: 96px; }
+.input::placeholder { color: var(--text-3); }
+.input:hover, .select:hover, .textarea:hover { border-color: #4A4268; }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; border-color: var(--focus); }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+.check { display: flex; align-items: center; gap: var(--s2); min-height: var(--tap); }
+.check input { width: 18px; height: 18px; accent-color: var(--purple); }
+
+/* ---- badges and status ---- */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 2px 10px; border-radius: var(--r-full);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.02em; white-space: nowrap;
+  border: 1px solid var(--border-strong); background: var(--raised); color: var(--text-2);
+}
+.badge--available { background: var(--success-soft); border-color: rgba(74, 222, 128, 0.4); color: var(--success); }
+.badge--planned { background: var(--purple-soft); border-color: rgba(167, 139, 250, 0.45); color: var(--purple); }
+.badge--unsupported { background: transparent; border-style: dashed; color: var(--text-3); }
+.badge--warning { background: var(--warning-soft); border-color: rgba(251, 191, 36, 0.4); color: var(--warning); }
+.badge--danger { background: var(--danger-soft); border-color: rgba(248, 113, 113, 0.4); color: var(--danger); }
+
+/* live status: a coloured dot AND a text label, so colour is never the only cue */
+.status { display: inline-flex; align-items: center; gap: var(--s2); min-height: 32px; padding: 0 var(--s3); border-radius: var(--r-full); border: 1px solid var(--border-strong); background: var(--card); font-size: var(--fs-sm); font-weight: 600; color: var(--text-2); white-space: nowrap; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-3); flex: none; }
+.status[data-state="online"] { color: var(--text); border-color: rgba(74, 222, 128, 0.4); }
+.status[data-state="online"] .status-dot { background: var(--success); box-shadow: 0 0 0 3px var(--success-soft); }
+.status[data-state="degraded"], .status[data-state="stale"] { color: var(--text); border-color: rgba(251, 191, 36, 0.45); }
+.status[data-state="degraded"] .status-dot, .status[data-state="stale"] .status-dot { background: var(--warning); box-shadow: 0 0 0 3px var(--warning-soft); }
+.status[data-state="offline"] { color: var(--text); border-color: rgba(248, 113, 113, 0.5); }
+.status[data-state="offline"] .status-dot { background: var(--danger); box-shadow: 0 0 0 3px var(--danger-soft); }
+.status[data-state="loading"] .status-dot { background: var(--cyan); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+/* ---- tables ---- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--r-md); }
+.table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.table caption { text-align: left; padding: var(--s3) var(--s4); color: var(--text-2); font-weight: 700; }
+.table th { text-align: left; padding: var(--s3) var(--s4); color: var(--text-3); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.06em; background: var(--raised); white-space: nowrap; }
+.table td { padding: var(--s3) var(--s4); border-top: 1px solid var(--border); vertical-align: top; }
+.table tbody tr:hover { background: rgba(167, 139, 250, 0.05); }
+
+/* ---- capability list (what exists vs what is planned) ---- */
+.caps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.cap { display: flex; gap: var(--s3); align-items: flex-start; justify-content: space-between; padding: var(--s3) 0; border-top: 1px solid var(--border); }
+.cap:first-child { border-top: 0; padding-top: 0; }
+.cap:last-child { padding-bottom: 0; }
+.cap-name { font-weight: 700; }
+.cap-note { color: var(--text-2); font-size: var(--fs-sm); margin-top: 2px; }
+
+/* ---- feedback states: empty, loading, error, offline, stale ---- */
+.state { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--s2); padding: var(--s6) var(--s4); border: 1px dashed var(--border-strong); border-radius: var(--r-lg); color: var(--text-2); }
+.state-title { color: var(--text); font-weight: 700; }
+.state--error { border-color: rgba(248, 113, 113, 0.5); background: var(--danger-soft); }
+.state--offline { border-color: rgba(251, 191, 36, 0.45); background: var(--warning-soft); }
+.banner { display: flex; gap: var(--s3); align-items: flex-start; padding: var(--s3) var(--s4); border-radius: var(--r-md); border: 1px solid var(--border-strong); background: var(--raised); color: var(--text-2); }
+.banner--info { border-color: rgba(34, 211, 238, 0.4); background: var(--cyan-soft); }
+.banner--warning { border-color: rgba(251, 191, 36, 0.45); background: var(--warning-soft); }
+.banner strong { color: var(--text); }
+.skeleton { display: block; border-radius: var(--r-sm); background: linear-gradient(90deg, var(--raised) 25%, #2A2342 50%, var(--raised) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; min-height: 1em; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ---- toast ---- */
+.toasts { position: fixed; right: var(--s4); bottom: var(--s4); z-index: 60; display: flex; flex-direction: column; gap: var(--s2); max-width: min(92vw, 380px); }
+.toast { background: var(--raised); border: 1px solid var(--border-strong); border-left: 4px solid var(--cyan); border-radius: var(--r-md); padding: var(--s3) var(--s4); box-shadow: var(--shadow-2); }
+.toast[data-kind="success"] { border-left-color: var(--success); }
+.toast[data-kind="error"] { border-left-color: var(--danger); }
+.toast[data-kind="warning"] { border-left-color: var(--warning); }
+
+/* ---- dialog ---- */
+dialog.modal { background: var(--card); color: var(--text); border: 1px solid var(--border-strong); border-radius: var(--r-lg); padding: var(--s5); width: min(92vw, 440px); box-shadow: var(--shadow-2); }
+dialog.modal::backdrop { background: rgba(5, 4, 12, 0.7); }
+
+/* ---- swatches (design reference page; classes, not inline styles, so the CSP can forbid inline CSS) ---- */
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--s3); }
+.sw { border: 1px solid var(--border-strong); border-radius: var(--r-md); overflow: hidden; background: var(--bg); }
+.sw-chip { height: 56px; }
+.sw-meta { padding: var(--s2) var(--s3); font-size: var(--fs-xs); color: var(--text-2); }
+.sw-meta strong { display: block; color: var(--text); font-size: var(--fs-sm); }
+.sw--bg .sw-chip { background: var(--bg); } .sw--sidebar .sw-chip { background: var(--sidebar); }
+.sw--card .sw-chip { background: var(--card); } .sw--raised .sw-chip { background: var(--raised); }
+.sw--purple .sw-chip { background: var(--purple); } .sw--cyan .sw-chip { background: var(--cyan); }
+.sw--success .sw-chip { background: var(--success); } .sw--warning .sw-chip { background: var(--warning); }
+.sw--danger .sw-chip { background: var(--danger); }

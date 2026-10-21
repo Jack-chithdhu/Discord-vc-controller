@@ -1,0 +1,83 @@
+/* ==========================================================================
+   VC Controller design tokens — dark purple + cyan, Gaming + SaaS + Bento.
+   Every colour, space, radius and duration used by the UI lives here, so a
+   re-skin is a change to this one file.
+
+   Contrast (WCAG, measured on the surfaces below; checked by test_web_ui.py):
+     --text   ≥ 14:1   --text-2 ≥ 8:1   --text-3 ≥ 6:1   (AA needs 4.5:1)
+     accents (purple / cyan / success / warning / danger) ≥ 5.9:1 on every surface
+   ========================================================================== */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg: #0B0A14;
+  --sidebar: #12101E;
+  --card: #19152A;
+  --raised: #211B34;
+
+  /* Brand + status */
+  --purple: #A78BFA;
+  --cyan: #22D3EE;
+  --success: #4ADE80;
+  --warning: #FBBF24;
+  --danger: #F87171;
+
+  /* Text */
+  --text: #F1EEFA;
+  --text-2: #B8B2D0;
+  --text-3: #9E98B8;
+  --on-accent: #0B0A14;          /* text on a purple / cyan / green fill */
+
+  /* Lines and tints */
+  --border: #2E2845;
+  --border-strong: #3A3354;
+  --purple-soft: rgba(167, 139, 250, 0.14);
+  --cyan-soft: rgba(34, 211, 238, 0.12);
+  --success-soft: rgba(74, 222, 128, 0.12);
+  --warning-soft: rgba(251, 191, 36, 0.12);
+  --danger-soft: rgba(248, 113, 113, 0.12);
+  --focus: var(--cyan);
+
+  /* Typography (system fonts: no external requests) */
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-md: 0.9375rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 2rem;
+  --lh: 1.5;
+
+  /* Spacing scale (4px base) */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+
+  /* Shape and depth (restrained) */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-full: 999px;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  /* Motion */
+  --t-fast: 120ms;
+  --t-med: 180ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Layout sizes */
+  --sidebar-w: 248px;
+  --rail-w: 72px;
+  --topbar-h: 60px;
+  --bottomnav-h: 64px;
+  --content-max: 1180px;
+  --tap: 44px;                   /* minimum touch target */
+}
