@@ -1,0 +1,17 @@
+{% macro icon(name) -%}
+<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-{{ name }}"></use></svg>
+{%- endmacro %}
+
+{# state: available | planned | unsupported. The label is text, never colour alone. #}
+{% macro badge(state) -%}
+{%- if state == 'available' -%}<span class="badge badge--available">Available</span>
+{%- elif state == 'planned' -%}<span class="badge badge--planned">Planned</span>
+{%- else -%}<span class="badge badge--unsupported">Not supported</span>{%- endif -%}
+{%- endmacro %}
+
+{% macro cap(name, state, note) -%}
+<li class="cap">
+  <div><div class="cap-name">{{ name }}</div><div class="cap-note">{{ note }}</div></div>
+  {{ badge(state) }}
+</li>
+{%- endmacro %}
