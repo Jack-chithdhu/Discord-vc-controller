@@ -1,0 +1,92 @@
+{% from "components/macros.html" import icon %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0B0A14">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:,">
+  <title>{{ page.title }} · VC Controller</title>
+  <link rel="stylesheet" href="/static/css/tokens.css?v={{ asset_v }}">
+  <link rel="stylesheet" href="/static/css/layout.css?v={{ asset_v }}">
+  <link rel="stylesheet" href="/static/css/components.css?v={{ asset_v }}">
+  <link rel="stylesheet" href="/static/css/pages.css?v={{ asset_v }}">
+  <link rel="stylesheet" href="/static/css/responsive.css?v={{ asset_v }}">
+  <script src="/static/js/api.js?v={{ asset_v }}" defer></script>
+  <script src="/static/js/common.js?v={{ asset_v }}" defer></script>
+  <script src="/static/js/access.js?v={{ asset_v }}" defer></script>
+  <script src="/static/js/shell.js?v={{ asset_v }}" defer></script>
+  {% block scripts %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  {% include "components/icons.html" %}
+
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="/ui/overview" aria-label="VC Controller, overview">
+        <span class="brand-mark" aria-hidden="true">{{ icon('mic') }}</span>
+        <span class="brand-text"><span class="brand-name">VC Controller</span><span class="brand-sub">Voice community</span></span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav">
+          {% for p in pages %}
+          <li><a class="nav-link" href="/ui/{{ p.slug }}" title="{{ p.title }}"{% if p.slug == active %} aria-current="page"{% endif %}>{{ icon(p.icon) }}<span class="nav-label">{{ p.title }}</span></a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+      <div class="sidebar-foot">
+        <a class="btn btn--ghost btn--sm" href="/legacy" title="Open the classic control panel"><span class="btn-label">Classic panel</span>{{ icon('external') }}</a>
+        <p class="meta">Preview of the redesigned site. The classic panel stays available.</p>
+      </div>
+    </aside>
+
+    <div class="app-body">
+      <header class="topbar">
+        <a class="topbar-brand" href="/ui/overview"><span class="brand-mark" aria-hidden="true">{{ icon('mic') }}</span>VC Controller</a>
+        <div class="topbar-actions">
+          <span class="status" id="app-status" data-state="loading" role="status">
+            <span class="status-dot" aria-hidden="true"></span><span class="status-text">Checking status…</span>
+          </span>
+          <button type="button" class="btn btn--sm" id="access-btn" hidden>Unlock</button>
+          <a class="btn btn--ghost btn--sm classic-link" href="/legacy">Classic panel</a>
+        </div>
+      </header>
+
+      <main class="main" id="main" tabindex="-1">
+        <noscript><div class="banner banner--warning"><div><strong>JavaScript is off.</strong> Live status needs JavaScript. Navigation still works.</div></div></noscript>
+        <div class="page-head">
+          <div><h1>{{ page.title }}</h1><p class="lead">{{ page.lead }}</p></div>
+          {% block actions %}{% endblock %}
+        </div>
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+  <nav class="bottomnav" aria-label="Primary, mobile">
+    {% for p in pages %}
+    <a href="/ui/{{ p.slug }}"{% if p.slug == active %} aria-current="page"{% endif %}>{{ icon(p.icon) }}<span>{{ p.short }}</span></a>
+    {% endfor %}
+  </nav>
+
+  <dialog class="modal" id="unlock-dialog" aria-labelledby="unlock-title">
+    <form method="dialog" id="unlock-form" novalidate>
+      <h2 id="unlock-title">Unlock controls</h2>
+      <p class="text-2 small">Enter the panel password. It stays in this browser tab only and is forgotten when you close the tab or choose Lock panel.</p>
+      <div class="field">
+        <label for="unlock-input">Panel password</label>
+        <input class="input" id="unlock-input" type="password" autocomplete="off" aria-describedby="unlock-error">
+        <span class="error-text" id="unlock-error" role="alert" hidden></span>
+      </div>
+      <div class="row dialog-actions">
+        <button type="button" class="btn btn--ghost" id="unlock-cancel">Cancel</button>
+        <button type="submit" class="btn btn--primary" id="unlock-submit">Unlock</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+</body>
+</html>
