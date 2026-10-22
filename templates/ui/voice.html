@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block scripts %}<script src="/static/js/voice.js?v={{ asset_v }}" defer></script>{% endblock %}
+{% block actions %}<div class="page-actions"><button type="button" class="btn" id="btn-refresh">Refresh</button></div>{% endblock %}
+{% block content %}
+<div id="voice-root" aria-busy="false">
+  <div class="banner banner--warning" id="voice-gate" hidden>
+    <div class="grow"><strong>Controls are locked.</strong> You can see channels and players. Enter the panel password to move, lock or disconnect people.</div>
+    <button type="button" class="btn btn--sm btn--primary" id="btn-gate-unlock">Unlock controls</button>
+  </div>
+  <div class="banner banner--warning" id="voice-open" hidden>
+    <div><strong>No panel password is set on this server.</strong> Anyone with the link can use these controls.</div>
+  </div>
+  <p class="small muted" id="voice-data-note" role="status" hidden></p>
+
+  <h2 class="section-title">Channels</h2>
+  <div class="card bento">
+    <div class="field span-4"><label for="sel-lobby">Lobby</label><select class="select" id="sel-lobby"><option value="">Loading…</option></select></div>
+    <div class="field span-4"><label for="sel-a">Team A channel</label><select class="select" id="sel-a"><option value="">Loading…</option></select></div>
+    <div class="field span-4"><label for="sel-b">Team B channel</label><select class="select" id="sel-b"><option value="">Loading…</option></select></div>
+  </div>
+
+  <h2 class="section-title">Players</h2>
+  <div class="card stack">
+    <p class="small muted" id="players-note" role="status">Choose the lobby to see who is in it.</p>
+    <ul class="players" id="players"><li class="state">Choose the lobby channel to see who is in it.</li></ul>
+    <p class="small text-2">Team A: <strong id="count-a">0</strong> · Team B: <strong id="count-b">0</strong>. Choosing a team only marks players here. Nobody moves until you press a Move button and confirm.</p>
+    <div class="row">
+      <button type="button" class="btn" id="btn-split" disabled>Random split</button>
+      <button type="button" class="btn btn--primary" id="btn-move-a" disabled>Move Team A</button>
+      <button type="button" class="btn btn--cyan" id="btn-move-b" disabled>Move Team B</button>
+      <button type="button" class="btn" id="btn-swap" disabled>Swap sides</button>
+      <button type="button" class="btn" id="btn-regroup" disabled>Regroup to lobby</button>
+    </div>
+  </div>
+
+  <h2 class="section-title">Channel locks</h2>
+  <div class="card stack">
+    <p class="small text-2">Locking a channel restricts the people inside it right now: they can leave and rejoin it, but cannot switch to another locked channel, and nobody else can join it.</p>
+    <p class="small" id="lock-summary" role="status">Loading lock status…</p>
+    <ul class="lock-list" id="lock-list"></ul>
+    <div class="row">
+      <button type="button" class="btn btn--primary" id="btn-lock" disabled>Lock selected</button>
+      <button type="button" class="btn" id="btn-unlock-all" disabled>Unlock all</button>
+    </div>
+  </div>
+
+  <h2 class="section-title">Result</h2>
+  <div id="voice-result" role="status" aria-live="polite"><p class="muted small">Actions you take appear here, with anything that failed.</p></div>
+
+  <dialog class="modal" id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-body">
+    <h2 id="confirm-title">Confirm</h2>
+    <p class="text-2" id="confirm-body"></p>
+    <div class="row dialog-actions">
+      <button type="button" class="btn btn--ghost" id="confirm-cancel">Cancel</button>
+      <button type="button" class="btn btn--primary" id="confirm-ok">Confirm</button>
+    </div>
+  </dialog>
+</div>
+{% endblock %}

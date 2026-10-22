@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block scripts %}<script src="/static/js/overview.js?v={{ asset_v }}" defer></script>{% endblock %}
+{% block actions %}<div class="page-actions"><a class="btn btn--primary" href="/ui/voice">Voice operations</a></div>{% endblock %}
+{% block content %}
+<div class="banner banner--warning" id="status-error" hidden>
+  <div><strong id="status-error-title">Status unavailable.</strong> <span id="status-error-detail"></span></div>
+</div>
+
+<h2 class="section-title">System status</h2>
+<div class="bento">
+  <section class="card span-3" aria-labelledby="st-bot"><div class="stat">
+    <span class="stat-label" id="st-bot">Discord bot</span>
+    <span class="stat-value" data-bind="bot">…</span>
+    <span class="stat-note" data-bind="bot-note">Checking</span></div></section>
+  <section class="card span-3" aria-labelledby="st-db"><div class="stat">
+    <span class="stat-label" id="st-db">Database</span>
+    <span class="stat-value" data-bind="db">…</span>
+    <span class="stat-note" data-bind="db-note">Checking</span></div></section>
+  <section class="card span-3" aria-labelledby="st-up"><div class="stat">
+    <span class="stat-label" id="st-up">Web app uptime</span>
+    <span class="stat-value" data-bind="uptime">…</span>
+    <span class="stat-note" data-bind="uptime-note">Since last restart</span></div></section>
+  <section class="card span-3" aria-labelledby="st-acc"><div class="stat">
+    <span class="stat-label" id="st-acc">Panel access</span>
+    <span class="stat-value" data-bind="access">…</span>
+    <span class="stat-note" data-bind="access-note">Checking</span></div></section>
+  <section class="card span-6" aria-labelledby="st-tz"><div class="stat">
+    <span class="stat-label" id="st-tz">Server timezone</span>
+    <span class="stat-value" data-bind="tz">…</span>
+    <span class="stat-note" data-bind="tz-note">Used for reservation dates and times</span></div></section>
+  <section class="card span-6" aria-labelledby="st-seen"><div class="stat">
+    <span class="stat-label" id="st-seen">Last status check</span>
+    <span class="stat-value" data-bind="seen">…</span>
+    <span class="stat-note" data-bind="seen-note">Refreshes about every 30 seconds</span></div></section>
+</div>
+
+<div id="voice-activity">
+  <div class="section-title">
+    <h2>Voice activity</h2>
+    <button type="button" class="btn btn--sm" id="ov-refresh">Refresh</button>
+  </div>
+  <p class="small muted" id="ov-note" role="status">Loading…</p>
+  <div class="bento">
+    <section class="card span-3" aria-labelledby="ov-l1"><div class="stat"><span class="stat-label" id="ov-l1">People in voice</span><span class="stat-value" data-ov="people">…</span><span class="stat-note">Across all voice channels now</span></div></section>
+    <section class="card span-3" aria-labelledby="ov-l2"><div class="stat"><span class="stat-label" id="ov-l2">Voice channels</span><span class="stat-value" data-ov="channels">…</span><span class="stat-note">Visible to the bot</span></div></section>
+    <section class="card span-3" aria-labelledby="ov-l3"><div class="stat"><span class="stat-label" id="ov-l3">Locked channels</span><span class="stat-value" data-ov="locked">…</span><span class="stat-note">Manage them on the Voice page</span></div></section>
+    <section class="card span-3" aria-labelledby="ov-l4"><div class="stat"><span class="stat-label" id="ov-l4">Voice time today</span><span class="stat-value" data-ov="today">…</span><span class="stat-note" data-ov="today-note">Loading</span></div></section>
+    <section class="card span-6"><h3 class="card-title">Channels</h3><div id="ov-channels"><span class="skeleton"></span></div></section>
+    <section class="card span-6"><h3 class="card-title">Recent activity</h3><div id="ov-log"><span class="skeleton"></span></div></section>
+  </div>
+</div>
+
+<h2 class="section-title">Where things are</h2>
+<div class="card">
+  <ul class="caps">
+    {{ cap("Voice controls", "available", "Split, move, swap, regroup, lock, mute and disconnect are on the Voice Operations page.") }}
+    {{ cap("Reservations", "planned", "Limits are editable in the classic panel. Listing, history and web approvals do not exist yet.") }}
+    {{ cap("Community and analytics", "planned", "Existing read-only data is shown in the classic Stats tab. New pages come in a later phase.") }}
+    {{ cap("Administration", "available", "Feature switches, birthday interval and reservation limits are in the classic Settings tab.") }}
+  </ul>
+</div>
+{% endblock %}
