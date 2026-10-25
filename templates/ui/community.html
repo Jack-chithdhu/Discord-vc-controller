@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block scripts %}<script src="/static/js/community.js?v={{ asset_v }}" defer></script>{% endblock %}
+{% block content %}
+<div id="cm-root">
+  <div class="section-title"><h2>Voice time leaderboard</h2></div>
+  <div class="card stack">
+    <div class="tabs" role="group" aria-label="Time period" id="cm-periods">
+      <button type="button" class="tab-btn" data-period="all" aria-pressed="true">All time</button>
+      <button type="button" class="tab-btn" data-period="month" aria-pressed="false">This month</button>
+      <button type="button" class="tab-btn" data-period="week" aria-pressed="false">This week</button>
+      <button type="button" class="tab-btn" data-period="today" aria-pressed="false">Today</button>
+    </div>
+    <div id="cm-vc" aria-live="polite"><span class="skeleton"></span></div>
+    <div id="cm-highlights"></div>
+  </div>
+
+  <div class="section-title"><h2>Points leaderboard</h2></div>
+  <div class="card stack" id="cm-points-card">
+    <p class="muted" id="cm-points-wait" role="status">Checking access…</p>
+    <div class="banner banner--warning" id="cm-points-gate" hidden>
+      <div class="grow"><strong>Points are private.</strong> Enter the panel password to see member names next to their balances.</div>
+      <button type="button" class="btn btn--sm btn--primary" id="cm-points-unlock">Unlock</button>
+    </div>
+    <div id="cm-points" hidden></div>
+  </div>
+
+  <div class="section-title"><h2>Members</h2></div>
+  <div class="card stack">
+    <p class="small text-2">Everyone with voice history, ranked by total time. Each name opens that member's profile page.</p>
+    <div class="row"><button type="button" class="btn" id="cm-load-members">Load members</button></div>
+    <div id="cm-members-box" hidden>
+      <div class="field"><label for="cm-search">Search by name</label><input class="input" id="cm-search" type="search" autocomplete="off"></div>
+      <p class="small muted" id="cm-members-count" role="status"></p>
+      <ul class="log" id="cm-members"></ul>
+      <div class="row"><button type="button" class="btn btn--sm" id="cm-more" hidden>Show more</button></div>
+    </div>
+    <div id="cm-members-msg" role="status"></div>
+  </div>
+
+  <div class="section-title"><h2>Capabilities</h2></div>
+  <div class="card"><ul class="caps">
+    {{ cap("Voice time leaderboard and profiles", "available", "Shown above and on each profile page.") }}
+    {{ cap("Points leaderboard", "available", "Shown above after you unlock. Read-only.") }}
+    {{ cap("Achievements leaderboard", "planned", "Exists as a Discord command only. Needs a new read-only endpoint, waiting for your approval. Not built.") }}
+  </ul></div>
+</div>
+{% endblock %}

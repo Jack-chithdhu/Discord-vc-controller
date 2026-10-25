@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block scripts %}<script src="/static/js/reservations.js?v={{ asset_v }}" defer></script>{% endblock %}
+{% block actions %}<div class="page-actions"><a class="btn" href="/legacy">Classic panel</a></div>{% endblock %}
+{% block content %}
+<div class="banner banner--info"><div><strong>Reservations are made and approved in Discord.</strong> The website can edit the booking limits below. It cannot list, approve or cancel reservations yet.</div></div>
+<div class="banner banner--warning" id="rv-tz" hidden><div><strong>The server timezone is not set.</strong> New reservations are blocked until TIMEZONE_OFFSET_HOURS is configured (India is 5.5).</div></div>
+
+<div id="rv-root">
+  <p class="muted" id="rv-wait" role="status">Checking access…</p>
+  <div class="banner banner--warning" id="rv-gate" hidden>
+    <div class="grow"><strong>Limits are locked.</strong> Enter the panel password to view or change them.</div>
+    <button type="button" class="btn btn--sm btn--primary" id="rv-unlock">Unlock</button>
+  </div>
+
+  <form id="rv-content" hidden novalidate>
+    <h2 class="section-title">Booking limits</h2>
+    <div class="card stack">
+      <div id="rv-result" role="status" aria-live="polite"></div>
+      <div class="bento">
+        <div class="field span-6"><label for="rv-cooldown_minutes">Cooldown between requests (minutes)</label><input class="input" id="rv-cooldown_minutes" type="number" min="0" step="any" inputmode="decimal" data-kind="float"></div>
+        <div class="field span-6"><label for="rv-expire_after_hours">Pending request expires after (hours)</label><input class="input" id="rv-expire_after_hours" type="number" min="0" step="any" inputmode="decimal" data-kind="float"></div>
+        <div class="field span-4"><label for="rv-max_pending">Max pending requests per user</label><input class="input" id="rv-max_pending" type="number" min="0" step="1" inputmode="numeric" data-kind="int"></div>
+        <div class="field span-4"><label for="rv-max_per_day">Max reservations per day per user</label><input class="input" id="rv-max_per_day" type="number" min="0" step="1" inputmode="numeric" data-kind="int"></div>
+        <div class="field span-4"><label for="rv-max_active">Max active reservations per user</label><input class="input" id="rv-max_active" type="number" min="0" step="1" inputmode="numeric" data-kind="int"></div>
+      </div>
+      <div class="stack">
+        <label class="check"><input type="checkbox" id="rv-spam_protection_enabled" data-kind="bool"> Spam protection enabled</label>
+        <label class="check"><input type="checkbox" id="rv-duplicate_protection_enabled" data-kind="bool"> Duplicate and overlap protection enabled</label>
+        <label class="check"><input type="checkbox" id="rv-auto_expire_enabled" data-kind="bool"> Auto-expire old pending requests</label>
+      </div>
+      <span class="error-text" id="rv-error" role="alert" hidden></span>
+      <div class="row">
+        <button type="submit" class="btn btn--primary" id="rv-save" disabled>Save changes</button>
+        <button type="button" class="btn btn--ghost" id="rv-reset" disabled>Discard changes</button>
+        <span class="small muted" id="rv-dirty"></span>
+      </div>
+    </div>
+  </form>
+</div>
+
+<h2 class="section-title">Capabilities</h2>
+<div class="card"><ul class="caps">
+  {{ cap("Booking limits", "available", "Edit above, or in the classic panel Settings tab.") }}
+  {{ cap("Create, approve and cancel reservations", "available", "In Discord only.") }}
+  {{ cap("Reservation list", "planned", "Needs a new read-only endpoint, waiting for your approval. Not built.") }}
+  {{ cap("Reservation history", "planned", "Needs a new read-only endpoint, waiting for your approval. Not built.") }}
+  {{ cap("Approve or decline from the website", "planned", "Not built. Would need a new endpoint with the password check.") }}
+</ul></div>
+{% endblock %}

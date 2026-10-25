@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block scripts %}<script src="/static/js/analytics.js?v={{ asset_v }}" defer></script>{% endblock %}
+{% block content %}
+<div id="an-root">
+  <div class="tabs" role="group" aria-label="Time period" id="an-periods">
+    <button type="button" class="tab-btn" data-period="today" aria-pressed="false">Today</button>
+    <button type="button" class="tab-btn" data-period="yesterday" aria-pressed="false">Yesterday</button>
+    <button type="button" class="tab-btn" data-period="week" aria-pressed="true">This week</button>
+    <button type="button" class="tab-btn" data-period="month" aria-pressed="false">This month</button>
+    <button type="button" class="tab-btn" data-period="all" aria-pressed="false">All time</button>
+  </div>
+  <p class="small muted" id="an-note" role="status">Loading…</p>
+
+  <div id="an-body">
+    <div class="bento">
+      <section class="card span-3" aria-labelledby="an-l1"><div class="stat"><span class="stat-label" id="an-l1">Total voice time</span><span class="stat-value" data-an="total">…</span><span class="stat-note">Everyone combined</span></div></section>
+      <section class="card span-3" aria-labelledby="an-l2"><div class="stat"><span class="stat-label" id="an-l2">Sessions</span><span class="stat-value" data-an="sessions">…</span><span class="stat-note">Joins to leaves analysed</span></div></section>
+      <section class="card span-3" aria-labelledby="an-l3"><div class="stat"><span class="stat-label" id="an-l3">Busiest hour</span><span class="stat-value" data-an="busiest">…</span><span class="stat-note" data-an="tz">Server time</span></div></section>
+      <section class="card span-3" aria-labelledby="an-l4"><div class="stat"><span class="stat-label" id="an-l4">Top channel</span><span class="stat-value stat-value--text" data-an="topchan">…</span><span class="stat-note" data-an="topchan-note">Most voice time</span></div></section>
+    </div>
+
+    <h2 class="section-title">Voice time by hour of day</h2>
+    <div class="card stack">
+      <p class="small text-2">Total time everyone spent in voice during each hour of the day, added up over the period.</p>
+      <div class="chart" id="an-chart"></div>
+      <div class="row"><button type="button" class="btn btn--sm" id="an-table-btn" aria-expanded="false" aria-controls="an-table-wrap">View as table</button></div>
+      <div id="an-table-wrap" hidden></div>
+    </div>
+
+    <h2 class="section-title">Channels</h2>
+    <div class="card stack" id="an-channels"><span class="skeleton"></span></div>
+  </div>
+
+  <h2 class="section-title">Capabilities</h2>
+  <div class="card"><ul class="caps">
+    {{ cap("Hourly activity, channel totals, peak concurrency", "available", "Shown above from the existing analytics endpoint.") }}
+    {{ cap("Day-by-day trend", "planned", "The data exists per member on profile pages. A server-wide trend needs a new endpoint, waiting for your approval. Not built.") }}
+    {{ cap("Data export", "unsupported", "No export endpoint exists.") }}
+  </ul></div>
+</div>
+{% endblock %}

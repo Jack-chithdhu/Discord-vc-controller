@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import cap %}
+{% block scripts %}<script src="/static/js/admin.js?v={{ asset_v }}" defer></script>{% endblock %}
+{% block actions %}<div class="page-actions"><a class="btn" href="/legacy">Classic panel</a></div>{% endblock %}
+{% block content %}
+<div id="admin-root">
+  <p class="muted" id="admin-wait" role="status">Checking access…</p>
+  <div class="banner banner--warning" id="admin-gate" hidden>
+    <div class="grow"><strong>Settings are locked.</strong> Enter the panel password to view or change them.</div>
+    <button type="button" class="btn btn--sm btn--primary" id="admin-unlock">Unlock</button>
+  </div>
+
+  <div id="admin-content" hidden>
+    <div id="admin-result" role="status" aria-live="polite"></div>
+
+    <h2 class="section-title">Feature switches</h2>
+    <div class="card">
+      <p class="small text-2">Each switch turns a bot feature on or off straight away, without a redeploy. You are asked to confirm every change.</p>
+      <ul class="switches" id="toggle-list"><li class="muted">Loading…</li></ul>
+    </div>
+
+    <h2 class="section-title">Birthday reminders</h2>
+    <form class="card stack" id="bday-form" novalidate>
+      <p class="small text-2">How often members who have not set a birthday are reminded. It only applies while “Repeat birthday reminders on an interval” is on above. When that is off, members are nudged once, ever.</p>
+      <div class="row">
+        <div class="field"><label for="bday-value">Every</label><input class="input" id="bday-value" type="number" min="0" step="any" inputmode="decimal"></div>
+        <div class="field"><label for="bday-unit">Unit</label>
+          <select class="select" id="bday-unit"><option value="minutes">minutes</option><option value="hours">hours</option><option value="days">days</option><option value="years">years</option></select></div>
+      </div>
+      <span class="error-text" id="bday-error" role="alert" hidden></span>
+      <div class="row"><button type="submit" class="btn btn--primary" id="bday-save">Save interval</button></div>
+    </form>
+  </div>
+
+  <h2 class="section-title">Not available yet</h2>
+  <div class="card"><ul class="caps">
+    {{ cap("Reservation limits", "available", "Moved to the Reservations page.") }}
+    {{ cap("Audit log", "unsupported", "The bot does not record who changed what.") }}
+    {{ cap("Per-user roles", "unsupported", "There is one shared password, no accounts.") }}
+  </ul></div>
+</div>
+{% endblock %}
