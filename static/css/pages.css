@@ -1,0 +1,81 @@
+/* Page-specific styles for Overview and Voice Operations (Phase 3). */
+
+.dialog-actions { justify-content: flex-end; margin-top: var(--s4); }
+dialog.modal h2 { margin-bottom: var(--s2); }
+
+/* lists */
+.log, .players, .lock-list { list-style: none; margin: 0; padding: 0; }
+.log-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); padding: var(--s2) 0; border-top: 1px solid var(--border); }
+.log-row:first-child { border-top: 0; padding-top: 0; }
+.log-main { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); align-items: baseline; min-width: 0; overflow-wrap: anywhere; }
+.log-tag { font-size: var(--fs-xs); font-weight: 700; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.04em; }
+.log-time { font-size: var(--fs-xs); white-space: nowrap; }
+
+/* initials avatar: no image request, so the CSP needs no third-party host */
+.avatar { width: 36px; height: 36px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 800; color: var(--on-accent); }
+.av-0 { background: var(--purple); } .av-1 { background: var(--cyan); } .av-2 { background: var(--success); }
+.av-3 { background: var(--warning); } .av-4 { background: var(--danger); }
+
+/* players */
+.player { display: grid; grid-template-columns: minmax(0, 1.2fr) auto auto; align-items: center; gap: var(--s3); padding: var(--s3) 0; border-top: 1px solid var(--border); }
+.player:first-child { border-top: 0; padding-top: 0; }
+.player-who { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; min-width: 0; }
+.player-name { font-weight: 700; overflow-wrap: anywhere; }
+.player-actions { display: flex; gap: var(--s2); flex-wrap: wrap; }
+
+/* segmented None / A / B choice (real radio buttons, keyboard and screen-reader friendly) */
+.seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: var(--r-md); padding: 0; margin: 0; overflow: hidden; min-width: 0; }
+.seg-opt { position: relative; display: block; }
+.seg-opt input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.seg-opt span { display: grid; place-items: center; min-width: 48px; min-height: var(--tap); padding: 0 var(--s3); font-weight: 700; color: var(--text-2); }
+.seg-opt + .seg-opt span { border-left: 1px solid var(--border-strong); }
+.seg-opt input:checked + span { background: var(--purple); color: var(--on-accent); }
+.seg-opt input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: -2px; }
+
+/* locks */
+.lock-row { display: flex; align-items: center; gap: var(--s3); padding: var(--s2) 0; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.lock-row:first-child { border-top: 0; }
+.lock-cb { width: 18px; height: 18px; accent-color: var(--purple); }
+
+/* ---- Phase 4 ---- */
+.tabs { display: flex; flex-wrap: wrap; gap: var(--s2); margin-bottom: var(--s3); }
+.tab-btn { min-height: var(--tap); padding: 0 var(--s4); border-radius: var(--r-full); border: 1px solid var(--border-strong); background: var(--card); color: var(--text-2); font: inherit; font-weight: 700; cursor: pointer; }
+.tab-btn:hover { background: var(--raised); color: var(--text); }
+.tab-btn[aria-pressed="true"] { background: var(--purple); border-color: var(--purple); color: var(--on-accent); }
+
+.rank-row { display: flex; align-items: center; gap: var(--s3); padding: var(--s2) 0; border-top: 1px solid var(--border); }
+.rank-row:first-child { border-top: 0; padding-top: 0; }
+.rank { width: 2ch; text-align: right; color: var(--text-3); font-variant-numeric: tabular-nums; font-weight: 700; }
+.rank-name { flex: 1; min-width: 0; overflow-wrap: anywhere; font-weight: 700; color: var(--text); }
+a.rank-name { text-decoration: none; }
+a.rank-name:hover { color: var(--cyan); text-decoration: underline; }
+.rank-value { color: var(--text-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.switches { list-style: none; margin: 0; padding: 0; }
+.switch-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); padding: var(--s3) 0; border-top: 1px solid var(--border); }
+.switch-row:first-child { border-top: 0; }
+.switch { display: inline-flex; align-items: center; gap: var(--s2); min-height: var(--tap); cursor: pointer; font-weight: 700; color: var(--text-2); }
+.switch input { width: 40px; height: 22px; accent-color: var(--purple); cursor: pointer; }
+.switch-state { min-width: 2.5ch; }
+
+.stat-value--text { font-size: var(--fs-lg); line-height: 1.25; }
+.chart { position: relative; }
+.chart-svg { display: block; width: 100%; height: auto; max-height: 280px; }
+.ch-grid { stroke: var(--border); stroke-width: 1; }
+.ch-base { stroke: var(--border-strong); stroke-width: 1; }
+.ch-axis { fill: var(--text-3); font-size: 11px; font-family: var(--font); }
+.ch-label { fill: var(--text); font-size: 12px; font-weight: 700; font-family: var(--font); }
+.ch-bar { fill: var(--purple); opacity: 0.8; }
+.ch-bar--peak { fill: var(--cyan); opacity: 1; }
+.ch-hit { fill: transparent; }
+.ch-hit:hover { fill: rgba(167, 139, 250, 0.10); }
+.chart-tip { position: absolute; z-index: 5; pointer-events: none; background: var(--raised); color: var(--text); border: 1px solid var(--border-strong); border-radius: var(--r-sm); padding: var(--s1) var(--s2); font-size: var(--fs-sm); font-weight: 700; white-space: nowrap; box-shadow: var(--shadow-2); }
+
+.hbars { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.hbar-head { display: flex; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s1); }
+.hbar-name { font-weight: 700; overflow-wrap: anywhere; }
+.hbar-value { color: var(--text-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hbar-track { height: 10px; border-radius: 0 var(--r-full) var(--r-full) 0; background: var(--raised); }
+.hbar-fill { height: 100%; background: var(--purple); border-radius: 0 4px 4px 0; }
+#rv-root > .banner, #admin-root > .banner, #voice-root > .banner { margin-top: var(--s3); }
+.main > .banner + .banner { margin-top: var(--s3); }
